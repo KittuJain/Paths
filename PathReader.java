@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class PathReader{
-	public void readPath() throws IOException{
+	public Map<String,List<String>> readPath() throws IOException{
 		Map<String,List<String>> map = new HashMap<String,List<String>>();
 		BufferedReader br = new BufferedReader(new FileReader("paths.txt"));
 		String line = ""+br.readLine();
@@ -22,12 +22,9 @@ public class PathReader{
 			else{
 				destinations.add(path[1]);
 			}
-			System.out.println("destinations ---->> "+destinations);
+			// System.out.println("destinations ---->> "+destinations);
 			line = br.readLine();
 		}
-	}
-	public static void main(String[] args) throws IOException{
-		PathReader pr = new PathReader();
-		pr.readPath();
+		return map;
 	}
 }

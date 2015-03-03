@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.io.IOException;
+
 
 public class Paths {
 	static Map<String, List<String>> map = new HashMap<String, List<String>>();
@@ -84,10 +86,12 @@ public class Paths {
 		return fullPath;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		String source = args[0];
 		String destination = args[1];
 		Paths paths = new Paths();
+		PathReader pr = new PathReader();
+		map = pr.readPath();
 		if(!paths.isCityPresent(source)){
 			System.out.println("No city named '"+source+"' in database");
 			return;
