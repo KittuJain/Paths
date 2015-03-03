@@ -55,4 +55,10 @@ public class PathsTest {
 		assertTrue(paths.hasPath("Bangalore", "Tokyo"));
 		assertTrue(paths.hasPath("Tokyo", "Bangalore"));
 	}
+
+	@Test
+	public void givePath_gives_full_path_between_two_places (){
+		Paths paths = new Paths();
+		assertEquals("Bangalore->Singapore", paths.givePath("Bangalore", "Singapore"));
+	}
 }

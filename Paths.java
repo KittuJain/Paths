@@ -34,8 +34,7 @@ public class Paths {
 	}
 
 	public boolean isCityPresent(String city){
-		Set<String> sourceStations = map.keySet(); //[Beijing, Singapore, Seoul, Bangalore]
-
+		Set<String> sourceStations = map.keySet(); //[Beijing, Singapore, Seoul, Tokyo, Dubai, Bangalore]
 		if(sourceStations.contains(city))
 			return true;
 		else{
@@ -54,10 +53,28 @@ public class Paths {
 		return (getFullPath(station1,station2,fullPath)==1) ? true : false;
 	}
 
+	public String givePath(String source, String destination){
+		List<String> path = new ArrayList<String>();
+		path.add(source);
+		int hasPath = getFullPath(source,destination,path);
+		int size = path.size();
+		String fullPath = "";
+		for(int i = 0; i < size; i++){
+			if(i>0)
+				fullPath += "->"+path.get(i);
+			else
+				fullPath += ""+path.get(i);
+		}
+		return fullPath;
+	}
+
 	public int getFullPath(String station1, String station2, List<String> path){
 		int index = 0;
 		if(map.get(station1) == null) return flag;
-		if(map.get(station1).contains(station2)) flag = 1;
+		if(map.get(station1).contains(station2)){
+			path.add(station2);
+			flag = 1;
+		}
 		else{
 			if(!path.contains((map.get(station1)).get(index))){
 				path.add((map.get(station1)).get(index));
