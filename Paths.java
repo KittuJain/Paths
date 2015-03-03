@@ -71,7 +71,6 @@ public class Paths {
 		return 0;
 	}
 
-
 	public String givePath(String source, String destination){
 		boolean hasPath = hasPath(source,destination);
 		int size = path.size();
@@ -98,6 +97,6 @@ public class Paths {
 			return;
 		}
 		else
-			System.out.println(paths.hasPath(source,destination));
+			System.out.println(paths.givePath(source,destination));
 	}
 }
