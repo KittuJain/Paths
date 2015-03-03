@@ -65,5 +65,8 @@ public class PathsTest {
 		Paths paths = new Paths();
 		assertEquals("Bangalore->Singapore", paths.givePath("Bangalore", "Singapore"));
 		assertEquals("Bangalore->Singapore->Seoul->Beijing->Tokyo", paths.givePath("Bangalore", "Tokyo"));
+		assertEquals("Singapore->Seoul->Beijing->Tokyo", paths.givePath("Singapore", "Tokyo"));
+		assertEquals("Tokyo->Beijing->Seoul->Singapore", paths.givePath("Tokyo", "Singapore"));
+		assertEquals("Dubai->Singapore->Seoul", paths.givePath("Dubai", "Seoul"));
 	}
 }
