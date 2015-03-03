@@ -53,6 +53,11 @@ public class PathsTest {
 	public void hasPath_returns_true_if_there_is_flight_between_Bangalore_and_Tokyo (){
 		Paths paths = new Paths();
 		assertTrue(paths.hasPath("Bangalore", "Tokyo"));
+	}
+
+	@Test
+	public void hasPath_returns_true_if_there_is_flight_between_Tokyo_and_Bangalore (){
+		Paths paths = new Paths();
 		assertTrue(paths.hasPath("Tokyo", "Bangalore"));
 	}
 
@@ -60,5 +65,6 @@ public class PathsTest {
 	public void givePath_gives_full_path_between_two_places (){
 		Paths paths = new Paths();
 		assertEquals("Bangalore->Singapore", paths.givePath("Bangalore", "Singapore"));
+		assertEquals("Bangalore->Singapore->Seoul->Beijing->Tokyo", paths.givePath("Bangalore", "Tokyo"));
 	}
 }
