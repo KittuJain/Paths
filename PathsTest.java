@@ -49,4 +49,10 @@ public class PathsTest {
 		assertTrue(paths.findFlight("Singapore", "Seoul"));
 	}
 	
+	@Test
+	public void findFlight_returns_true_if_there_is_flight_between_Singapore_and_Bangalore (){
+		Paths paths = new Paths();
+		assertTrue(paths.findFlight("Singapore", "Bangalore"));
+	}
+
 }
