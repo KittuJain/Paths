@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Paths {
+	public int flag = 0;
 	static Map<String, List<String>> map = new HashMap<String, List<String>>();
 	
 	static{
@@ -47,9 +48,27 @@ public class Paths {
 		return false;
 	}
 
-	public boolean findFlight(String station1, String station2){
-		if(map.get(station1) == null) return false;
-		return map.get(station1).contains(station2);
+	public boolean hasPath(String station1, String station2){
+		List<String> fullPath = new ArrayList<String>();
+		fullPath.add(station1);
+		return (getFullPath(station1,station2,fullPath)==1) ? true : false;
+	}
+
+	public int getFullPath(String station1, String station2, List<String> path){
+		int index = 0;
+		if(map.get(station1) == null) return flag;
+		if(map.get(station1).contains(station2)) flag = 1;
+		else{
+			if(!path.contains((map.get(station1)).get(index))){
+				path.add((map.get(station1)).get(index));
+				getFullPath((map.get(station1)).get(index),station2,path);
+			}
+			else{
+				path.add((map.get(station1)).get(index++));
+				getFullPath((map.get(station1)).get(index++),station2,path);
+			}
+		}
+		return flag;
 	}
 
 	public static void main(String[] args) {
@@ -65,6 +84,6 @@ public class Paths {
 			return;
 		}
 		else
-			System.out.println(paths.findFlight(source,destination));
+			System.out.println(paths.hasPath(source,destination));
 	}
 }

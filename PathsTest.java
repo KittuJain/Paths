@@ -11,48 +11,48 @@ public class PathsTest {
 		assertTrue(paths.isCityPresent("Dubai"));
 		assertTrue(paths.isCityPresent("Tokyo"));
 		assertTrue(paths.isCityPresent("Singapore"));
+		assertTrue(paths.isCityPresent("Beijing"));
 	}
 
 	@Test
-	public void findFlight_returns_true_if_there_is_direct_flight_between_Bangalore_and_Singapore (){
+	public void hasPath_returns_true_if_there_is_direct_flight_between_Bangalore_and_Singapore (){
 		Paths paths = new Paths();
-		assertTrue(paths.findFlight("Bangalore", "Singapore"));
+		assertTrue(paths.hasPath("Bangalore", "Singapore"));
+		assertTrue(paths.hasPath("Singapore", "Bangalore"));
 	}
 
 	@Test
-	public void findFlight_returns_false_if_there_is_no_flight_between_Bangalore_and_Tokyo (){
+	public void hasPath_returns_true_if_there_is_direct_flight_between_Seoul_and_Beijing (){
 		Paths paths = new Paths();
-		assertFalse(paths.findFlight("Bangalore", "Tokyo"));
+		assertTrue(paths.hasPath("Seoul", "Beijing"));
+		assertTrue(paths.hasPath("Beijing", "Seoul"));
 	}
 
 	@Test
-	public void findFlight_returns_true_if_there_is_direct_flight_between_Seoul_and_Beijing (){
+	public void hasPath_returns_true_if_there_is_direct_flight_between_Beijing_and_Tokyo (){
 		Paths paths = new Paths();
-		assertTrue(paths.findFlight("Seoul", "Beijing"));
-	}
-
-	@Test
-	public void findFlight_returns_true_if_there_is_direct_flight_between_Beijing_and_Tokyo (){
-		Paths paths = new Paths();
-		assertTrue(paths.findFlight("Beijing", "Tokyo"));
+		assertTrue(paths.hasPath("Beijing", "Tokyo"));
+		assertTrue(paths.hasPath("Tokyo", "Beijing"));
 	}
 	
 	@Test
-	public void findFlight_returns_true_if_there_is_direct_flight_between_Singapore_and_Dubai (){
+	public void hasPath_returns_true_if_there_is_direct_flight_between_Singapore_and_Dubai (){
 		Paths paths = new Paths();
-		assertTrue(paths.findFlight("Singapore", "Dubai"));
+		assertTrue(paths.hasPath("Singapore", "Dubai"));
+		assertTrue(paths.hasPath("Dubai", "Singapore"));
 	}
 
 	@Test
-	public void findFlight_returns_true_if_there_is_direct_flight_between_Singapore_and_Seoul (){
+	public void hasPath_returns_true_if_there_is_direct_flight_between_Singapore_and_Seoul (){
 		Paths paths = new Paths();
-		assertTrue(paths.findFlight("Singapore", "Seoul"));
-	}
-	
-	@Test
-	public void findFlight_returns_true_if_there_is_flight_between_Singapore_and_Bangalore (){
-		Paths paths = new Paths();
-		assertTrue(paths.findFlight("Singapore", "Bangalore"));
+		assertTrue(paths.hasPath("Singapore", "Seoul"));
+		assertTrue(paths.hasPath("Seoul", "Singapore"));
 	}
 
+	@Test
+	public void hasPath_returns_true_if_there_is_flight_between_Bangalore_and_Tokyo (){
+		Paths paths = new Paths();
+		assertTrue(paths.hasPath("Bangalore", "Tokyo"));
+		assertTrue(paths.hasPath("Tokyo", "Bangalore"));
+	}
 }
