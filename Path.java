@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class Path {
 	static Map<String, List<String>> map = new HashMap<String, List<String>>();
-	Queue path = new LinkedList();
+	Queue fullPath = new LinkedList();
 	static{
 		List<String> bangalore = new ArrayList<String>();
 		List<String> singapore = new ArrayList<String>();
@@ -51,21 +51,21 @@ public class Path {
 	}
 
 	public boolean hasPath(String station1, String station2){
-		path.add(station1);
+		fullPath.add(station1);
 		return (doesPathExists(station1,station2) == 1) ? true : false;
 	}
 
 	public int doesPathExists(String station1, String station2){
 		if(map.get(station1) == null) return 0;
 		if(map.get(station1).contains(station2)){
-			path.add(station2);
+			fullPath.add(station2);
 			return 1;
 		}
 		if(!map.get(station1).contains(station2)){			
 			int size = map.get(station1).size();
 			for(int i = 0; i < size; i++){
-				if(!path.contains(map.get(station1).get(i))){
-					path.add(map.get(station1).get(i));
+				if(!fullPath.contains(map.get(station1).get(i))){
+					fullPath.add(map.get(station1).get(i));
 					return doesPathExists(map.get(station1).get(i),station2);
 				}
 			}
@@ -75,14 +75,14 @@ public class Path {
 
 	public String givePath(String source, String destination){
 		boolean hasPath = hasPath(source,destination);
-		int size = path.size();
-		String fullPath = "";
+		int size = fullPath.size();
+		String fullRoute = "";
 		for(int i = 0; i < size; i++){
 			if(i>0)
-				fullPath += "->"+path.poll();
+				fullRoute += "->"+fullPath.poll();
 			else
-				fullPath += ""+path.poll();
+				fullRoute += ""+fullPath.poll();
 		}
-		return fullPath;
+		return fullRoute;
 	}
 }
