@@ -9,22 +9,22 @@ import java.util.ArrayList;
 
 public class PathReader{
 	public Map<String,List<String>> readPath(File fileName) throws IOException{
-		Map<String,List<String>> map = new HashMap<String,List<String>>();
+		Map<String,List<String>> routesMap = new HashMap<String,List<String>>();
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = ""+br.readLine();
-		while(line!=null){
+		while(line != null){
 			String path[] = line.split(",");
-			List<String> destinations = map.get(path[0]);
+			List<String> destinations = routesMap.get(path[0]);
 			if(destinations == null){
 				destinations = new ArrayList<String>();
 				destinations.add(path[1]);				
-				map.put(path[0],destinations);
+				routesMap.put(path[0],destinations);
 			}
 			else{
 				destinations.add(path[1]);
 			}
 			line = br.readLine();
 		}
-		return map;
+		return routesMap;
 	}
 }
