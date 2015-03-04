@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -7,9 +8,9 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class PathReader{
-	public Map<String,List<String>> readPath() throws IOException{
+	public Map<String,List<String>> readPath(File fileName) throws IOException{
 		Map<String,List<String>> map = new HashMap<String,List<String>>();
-		BufferedReader br = new BufferedReader(new FileReader("paths.txt"));
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String line = ""+br.readLine();
 		while(line!=null){
 			String path[] = line.split(",");
