@@ -22,7 +22,6 @@ public class PathReader{
 			else{
 				destinations.add(path[1]);
 			}
-			// System.out.println("destinations ---->> "+destinations);
 			line = br.readLine();
 		}
 		return map;
