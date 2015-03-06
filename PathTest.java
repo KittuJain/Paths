@@ -5,6 +5,7 @@ public class PathTest {
 	
 	@Test
 	public void isCityPresent_checks_whether_city_is_prsent (){
+		PathReader pr = new PathReader();
 		Path path = new Path();
 		assertFalse(path.isCityPresent("Chennai"));
 		assertTrue(path.isCityPresent("Dubai"));

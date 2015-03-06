@@ -10,6 +10,7 @@ import java.io.IOException;
 public class Path {
 	static Map<String, List<String>> map = new HashMap<String, List<String>>();
 	Queue fullPath = new LinkedList();
+
 	static{
 		List<String> bangalore = new ArrayList<String>();
 		List<String> singapore = new ArrayList<String>();
@@ -34,6 +35,14 @@ public class Path {
 		map.put("Dubai", dubai);
 		map.put("Tokyo", tokyo);
 	}
+	public Path(){
+		map=map;
+	}
+
+	public Path(Map<String, List<String>> map){
+		this.map=map;
+	}
+
 
 	public boolean isCityPresent(String city){
 		Set<String> sourceStations = map.keySet(); //[Beijing, Singapore, Seoul, Tokyo, Dubai, Bangalore]
