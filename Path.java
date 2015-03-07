@@ -81,15 +81,20 @@ public class Path {
 		return 0;
 	}
 
-	public String givePath(String source, String destination){
+	public String givePath(String source, String destination) throws IOException{
 		boolean hasPath = hasPath(source,destination);
 		int size = fullPath.size();
 		String fullRoute = "";
+		CitiesReader cr = new CitiesReader();
 		for(int i = 0; i < size; i++){
-			if(i>0)
-				fullRoute += "->"+fullPath.poll();
-			else
-				fullRoute += ""+fullPath.poll();
+			cr.readCity();
+				String pathWithCity = fullPath.poll().toString();
+			if(i>0){
+				fullRoute += "->"+pathWithCity+"["+cr.getCountry(pathWithCity)+"]";
+			}
+			else{
+				fullRoute += ""+pathWithCity+"["+cr.getCountry(pathWithCity)+"]";				
+			}
 		}
 		return fullRoute;
 	}

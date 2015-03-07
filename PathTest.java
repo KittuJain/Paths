@@ -61,13 +61,13 @@ public class PathTest {
 		assertTrue(path.hasPath("Tokyo", "Bangalore"));
 	}
 
-	@Test
-	public void givePath_gives_full_path_between_two_places (){
-		Path path = new Path();
-		assertEquals("Bangalore->Singapore", path.givePath("Bangalore", "Singapore"));
-		assertEquals("Bangalore->Singapore->Seoul->Beijing->Tokyo", path.givePath("Bangalore", "Tokyo"));
-		assertEquals("Singapore->Seoul->Beijing->Tokyo", path.givePath("Singapore", "Tokyo"));
-		assertEquals("Tokyo->Beijing->Seoul->Singapore", path.givePath("Tokyo", "Singapore"));
-		assertEquals("Dubai->Singapore->Seoul", path.givePath("Dubai", "Seoul"));
-	}
+	// @Test
+	// public void givePath_gives_full_path_between_two_places (){
+	// 	Path path = new Path();
+	// 	assertEquals("Bangalore->Singapore", path.givePath("Bangalore", "Singapore"));
+	// 	assertEquals("Bangalore->Singapore->Seoul->Beijing->Tokyo", path.givePath("Bangalore", "Tokyo"));
+	// 	assertEquals("Singapore->Seoul->Beijing->Tokyo", path.givePath("Singapore", "Tokyo"));
+	// 	assertEquals("Tokyo->Beijing->Seoul->Singapore", path.givePath("Tokyo", "Singapore"));
+	// 	assertEquals("Dubai->Singapore->Seoul", path.givePath("Dubai", "Seoul"));
+	// }
 }

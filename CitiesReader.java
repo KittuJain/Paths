@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class CitiesReader{
 	Map<String,String> countryRoutes = new HashMap<String,String>();
+	
 	public void readCity() throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader("cities.txt"));
 		String line = ""+br.readLine();
@@ -17,15 +18,9 @@ public class CitiesReader{
 			line = br.readLine();
 		}
 		Set<String> cities = countryRoutes.keySet();
-		for (String city : cities) {
-			System.out.println(city+"["+getCountry(city)+"]");
-		}
 	}
+
 	public String getCountry(String city){
 		return countryRoutes.get(city);
-	}
-	public static void main(String[] args) throws IOException{
-		CitiesReader cr = new CitiesReader();
-		cr.readCity();
 	}
 }
