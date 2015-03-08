@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.io.IOException;
+import java.io.File;
 
 public class Path {
 	static Map<String, List<String>> map = new HashMap<String, List<String>>();
+	Map<String,String> countryRoutes = new HashMap<String, String>();
 	Queue fullPath = new LinkedList();
 
 	static{
@@ -39,8 +41,9 @@ public class Path {
 		map=map;
 	}
 
-	public Path(Map<String, List<String>> map){
+	public Path(Map<String, List<String>> map,Map<String,String> countryRoutes){
 		this.map=map;
+		this.countryRoutes = countryRoutes;
 	}
 
 
@@ -81,19 +84,18 @@ public class Path {
 		return 0;
 	}
 
-	public String givePath(String source, String destination) throws IOException{
+	public String givePath(String source, String destination) throws Exception{
 		boolean hasPath = hasPath(source,destination);
 		int size = fullPath.size();
 		String fullRoute = "";
 		CitiesReader cr = new CitiesReader();
 		for(int i = 0; i < size; i++){
-			cr.readCity();
-				String pathWithCity = fullPath.poll().toString();
+			String pathWithCity = fullPath.poll().toString();
 			if(i>0){
-				fullRoute += "->"+pathWithCity+"["+cr.getCountry(pathWithCity)+"]";
+				fullRoute += "->"+pathWithCity+"["+cr.getCountry(countryRoutes,pathWithCity)+"]";
 			}
 			else{
-				fullRoute += ""+pathWithCity+"["+cr.getCountry(pathWithCity)+"]";				
+				fullRoute += ""+pathWithCity+"["+cr.getCountry(countryRoutes,pathWithCity)+"]";				
 			}
 		}
 		return fullRoute;
