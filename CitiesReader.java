@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class CitiesReader{
-	
 	public Map<String,String> readCity(File fileName) throws Exception{
 		Map<String,String> countryRoutes = new HashMap<String,String>();
 		try{
