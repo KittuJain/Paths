@@ -87,15 +87,18 @@ public class Path {
     public String printPath(String source, String destination) throws Exception {
         List<String> fullPath = getPath(source, destination);
         int size = fullPath.size();
-        String fullRoute = "";
-        for (int i = 0; i < size; i++) {
-            String pathWithCity = fullPath.toArray()[i].toString();
-            if (i > 0) {
-                fullRoute += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
-            } else {
-                fullRoute += "" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+        if((fullPath.get(0) == source) && (fullPath.get(size-1) == destination)){
+            String fullRoute = "";
+            for (int i = 0; i < size; i++) {
+                String pathWithCity = fullPath.toArray()[i].toString();
+                if (i > 0) {
+                    fullRoute += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+                } else {
+                    fullRoute += "" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+                }
             }
+            return fullRoute;
         }
-        return fullRoute;
+        return "Path doesn't exist";
     }
 }
