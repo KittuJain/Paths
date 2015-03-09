@@ -11,7 +11,7 @@ import java.io.File;
 
 public class Path {
     static Map<String, List<String>> map = new HashMap<String, List<String>>();
-    Map<String,String> countryRoutes = new HashMap<String, String>();
+    CitiesReader cr;
     Queue fullPath = new LinkedList();
 
     static{
@@ -42,9 +42,9 @@ public class Path {
         map=map;
     }
 
-    public Path(Map<String, List<String>> map,Map<String,String> countryRoutes){
+    public Path(Map<String, List<String>> map,CitiesReader cr){
         this.map=map;
-        this.countryRoutes = countryRoutes;
+        this.cr = cr;
     }
 
 
@@ -89,14 +89,13 @@ public class Path {
         boolean hasPath = hasPath(source,destination);
         int size = fullPath.size();
         String fullRoute = "";
-        CitiesReader cr = new CitiesReader();
         for(int i = 0; i < size; i++){
             String pathWithCity = fullPath.poll().toString();
             if(i>0){
-                fullRoute += "->"+pathWithCity+"["+cr.getCountry(countryRoutes,pathWithCity)+"]";
+                fullRoute += "->"+pathWithCity+"["+cr.getCountry(pathWithCity)+"]";
             }
             else{
-                fullRoute += ""+pathWithCity+"["+cr.getCountry(countryRoutes,pathWithCity)+"]";
+                fullRoute += ""+pathWithCity+"["+cr.getCountry(pathWithCity)+"]";
             }
         }
         return fullRoute;

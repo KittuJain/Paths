@@ -8,9 +8,13 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class CitiesReader{
+    Map<String,String> countryRoutes;
+    public CitiesReader(File file)throws Exception{
+        countryRoutes = readCity(file);
+    }
     public Map<String,String> readCity(File fileName) throws Exception{
         Map<String,String> countryRoutes = new HashMap<String,String>();
-        try{
+            try{
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             String line = ""+br.readLine();
             while(line != null){
@@ -25,7 +29,7 @@ public class CitiesReader{
         return countryRoutes;
     }
 
-    public String getCountry(Map<String,String> countryRoutes, String city){
+    public String getCountry(String city){
         return countryRoutes.get(city);
     }
 }

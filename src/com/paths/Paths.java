@@ -15,15 +15,18 @@ class Paths {
         File cityFile = new File(args[3]);
         String source = args[4];
         String destination = args[5];
-        CitiesReader cr = new CitiesReader();
-        Map<String,String> cityCountryRoutes = cr.readCity(cityFile);
         if(!fileName.exists()){
             System.out.println("No database named "+fileName+" found");
             return;
         }
+        if(!cityFile.exists()){
+            System.out.println("No database named "+cityFile+" found");
+            return;
+        }
         PathReader pr = new PathReader();
         map = pr.readPath(fileName);
-        Path path = new Path(map,cityCountryRoutes);
+        CitiesReader cr = new CitiesReader(cityFile);
+        Path path = new Path(map,cr);
 
         if(!path.isCityPresent(source)){
             System.out.println("No city named '"+source+"' in database");
