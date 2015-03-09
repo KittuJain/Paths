@@ -25,6 +25,15 @@ public class PathReader{
                 else{
                     destinations.add(path[1]);
                 }
+                destinations = routesMap.get(path[1]);
+                if(destinations == null){
+                    destinations = new ArrayList<String>();
+                    destinations.add(path[0]);
+                    routesMap.put(path[1],destinations);
+                }
+                else{
+                    destinations.add(path[0]);
+                }
                 line = br.readLine();
             }
         }catch(Exception e){

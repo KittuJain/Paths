@@ -89,15 +89,17 @@ public class Path {
         boolean hasPath = hasPath(source,destination);
         int size = fullPath.size();
         String fullRoute = "";
-        for(int i = 0; i < size; i++){
-            String pathWithCity = fullPath.poll().toString();
-            if(i>0){
-                fullRoute += "->"+pathWithCity+"["+cr.getCountry(pathWithCity)+"]";
+        if(hasPath==true) {
+            for (int i = 0; i < size; i++) {
+                String pathWithCity = fullPath.poll().toString();
+                if (i > 0) {
+                    fullRoute += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+                } else {
+                    fullRoute += "" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+                }
             }
-            else{
-                fullRoute += ""+pathWithCity+"["+cr.getCountry(pathWithCity)+"]";
-            }
-        }
-        return fullRoute;
+            return fullRoute;
+        }else
+            return "Path Doesn't Exists";
     }
 }
