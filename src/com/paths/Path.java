@@ -12,9 +12,9 @@ import java.io.File;
 public class Path {
     static Map<String, List<String>> map = new HashMap<String, List<String>>();
     CitiesReader cr;
-    Queue fullPath = new LinkedList();
+    List<String> subPath = new ArrayList<String>();
 
-    static{
+    static {
         List<String> bangalore = new ArrayList<String>();
         List<String> singapore = new ArrayList<String>();
         List<String> seoul = new ArrayList<String>();
@@ -38,67 +38,64 @@ public class Path {
         map.put("Dubai", dubai);
         map.put("Tokyo", tokyo);
     }
-    public Path(){
-        map=map;
+
+    public Path() {
+        map = map;
     }
 
-    public Path(Map<String, List<String>> map,CitiesReader cr){
-        this.map=map;
+    public Path(Map<String, List<String>> map, CitiesReader cr) {
+        this.map = map;
         this.cr = cr;
     }
 
-    public boolean isCityPresent(String city){
+    public boolean isCityPresent(String city) {
         Set<String> sourceStations = map.keySet();
-        if(sourceStations.contains(city))
+        if (sourceStations.contains(city))
             return true;
-        else{
-            for(String source : sourceStations){
-                List<String> destinations = map.get(source) ;
-                if(destinations.contains(city))
+        else {
+            for (String source : sourceStations) {
+                List<String> destinations = map.get(source);
+                if (destinations.contains(city))
                     return true;
             }
         }
         return false;
     }
 
-    public boolean hasPath(String station1, String station2){
+    public List<String> getPath(String station1, String station2) {
+        List<String> fullPath = new ArrayList<String>();
         fullPath.add(station1);
-        return (doesPathExists(station1,station2) == 1) ? true : false;
+        fullPath = (givePath(fullPath, station1, station2));
+        return fullPath;
     }
 
-    private int doesPathExists(String station1, String station2){
-        if(map.get(station1) == null) return 0;
-        if(map.get(station1).contains(station2)){
+    private List<String> givePath(List<String> fullPath, String station1, String station2) {
+        if (map.get(station1).contains(station2)) {
             fullPath.add(station2);
-            return 1;
+            return fullPath;
         }
-        if(!map.get(station1).contains(station2)){
-            int size = map.get(station1).size();
-            for(int i = 0; i < size; i++){
-                if(!fullPath.contains(map.get(station1).get(i))){
-                    fullPath.add(map.get(station1).get(i));
-                    return doesPathExists(map.get(station1).get(i),station2);
-                }
+        int size = map.get(station1).size();
+        for (int i = 0; i < size; i++) {
+            if (!fullPath.contains(map.get(station1).get(i))) {
+                fullPath.add(map.get(station1).get(i));
+                return givePath(fullPath, map.get(station1).get(i), station2);
             }
         }
-        return 0;
+        return fullPath;
     }
 
-    public String givePath(String source, String destination) throws Exception{
-        boolean hasPath = hasPath(source,destination);
+    public String printPath(String source, String destination) throws Exception {
+        List<String> fullPath = getPath(source, destination);
         int size = fullPath.size();
         String fullRoute = "";
-        if(hasPath==true) {
-            for (int i = 0; i < size; i++) {
-                String pathWithCity = fullPath.poll().toString();
-                if (i > 0) {
-                    fullRoute += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
-                } else {
-                    fullRoute += "" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
-                }
+        for (int i = 0; i < size; i++) {
+            String pathWithCity = fullPath.toArray()[i].toString();
+            if (i > 0) {
+                fullRoute += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+            } else {
+                fullRoute += "" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
             }
-            return fullRoute;
-        }else
-            return "Path Doesn't Exists";
+        }
+        return fullRoute;
     }
 }

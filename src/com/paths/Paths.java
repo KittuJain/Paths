@@ -36,6 +36,6 @@ class Paths {
             System.out.println("No city named '"+destination+"' in database");
             return;
         }
-        System.out.println(path.givePath(source,destination));
+        System.out.println(path.printPath(source,destination));
     }
 }
