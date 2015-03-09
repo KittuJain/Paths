@@ -47,9 +47,8 @@ public class Path {
         this.cr = cr;
     }
 
-
     public boolean isCityPresent(String city){
-        Set<String> sourceStations = map.keySet(); //[Beijing, Singapore, Seoul, Tokyo, Dubai, Bangalore]
+        Set<String> sourceStations = map.keySet();
         if(sourceStations.contains(city))
             return true;
         else{
