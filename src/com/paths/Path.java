@@ -57,6 +57,25 @@ public class Path {
         }
         return false;
     }
+    public boolean hasDirectPath(String source, String destination){
+        return (isCityPresent(source) && map.get(source).indexOf(destination)> -1);
+    }
+
+    public int hasIndirectPath(String source, String destination, List<String> path) {
+        path.add(source);
+        if(source.equals(destination)) return 0;
+        if(hasDirectPath(source, destination)) return 1;
+        for (String city : map.get(source)) {
+            if(!path.contains(city) && hasIndirectPath(city, destination, path)==1)
+                return 1;
+        }
+        return 0;
+    }
+
+    public int hasPath(String source, String destination){
+        List<String> path = new ArrayList<String>();
+        return (isCityPresent(source)) ? hasIndirectPath(source, destination, path) : 0;
+    }
 
     public List<List<String>> getPath(String station1, String station2) {
         List<String> path = new ArrayList<String>();
@@ -85,22 +104,25 @@ public class Path {
         List<List<String>> allPaths = getPath(source, destination);
         int size = allPaths.size();
         String fullRoute = "";
-        for(int i = 0; i < size; i++){
-            List<String> path = allPaths.get(i);
-            int sizeOfEachPath = path.size();
-            if((path.get(0).equals(source)) && (path.get(sizeOfEachPath-1).equals(destination))) {
-                String route = "";
-                for (int j = 0; j < sizeOfEachPath; j++) {
-                    String pathWithCity = path.get(j);
-                    if (j > 0) {
-                        route += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
-                    } else {
-                        route += (i+1)+". " + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+        if(hasPath(source,destination)==1) {
+            for (int i = 0; i < size; i++) {
+                List<String> path = allPaths.get(i);
+                int sizeOfEachPath = path.size();
+                if ((path.get(0).equals(source)) && (path.get(sizeOfEachPath - 1).equals(destination))) {
+                    String route = "";
+                    for (int j = 0; j < sizeOfEachPath; j++) {
+                        String pathWithCity = path.get(j);
+                        if (j > 0) {
+                            route += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+                        } else {
+                            route += (i + 1) + ". " + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+                        }
                     }
+                    fullRoute = fullRoute + "\n" + route;
                 }
-                fullRoute = fullRoute+"\n"+ route;
             }
+            return fullRoute;
         }
-        return fullRoute;
+        return "Path doesn't exist";
     }
 }
