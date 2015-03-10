@@ -26,6 +26,7 @@ public class Path {
         singapore.add("Dubai");
         seoul.add("Beijing");
         beijing.add("Tokyo");
+        dubai.add("Seoul");
         map.put("Bangalore", bangalore);
         map.put("Singapore", singapore);
         map.put("Seoul", seoul);
@@ -34,9 +35,9 @@ public class Path {
         map.put("Tokyo", tokyo);
     }
 
-//    public Path() {
-//        map = map;
-//    }
+    public Path() {
+        map = map;
+    }
 
     public Path(Map<String, List<String>> map, CitiesReader cr) {
         this.map = map;
@@ -60,7 +61,7 @@ public class Path {
     public List<List<String>> getPath(String station1, String station2) {
         List<String> path = new ArrayList<String>();
         List<List<String>> allPaths = new ArrayList<List<String>>();
-        givePath(path, allPaths,station1, station2);
+        givePath(path, allPaths, station1, station2);
         return allPaths;
     }
 
@@ -71,11 +72,10 @@ public class Path {
             path.remove(source);
             return;
         }
-        int size = map.get(source).size();
         List<String> destinations = map.get(source);
-        for (int i = 0; i < destinations.size(); i++) {
-            if (!path.contains(destinations.get(i))) {
-                givePath(path, allPaths, destinations.get(i), destination);
+        for (String dest : destinations){
+            if (!path.contains(dest)) {
+                givePath(path, allPaths, dest, destination);
             }
         }
         path.remove(source);
