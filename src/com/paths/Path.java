@@ -5,15 +5,10 @@ import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Queue;
-import java.util.LinkedList;
-import java.io.File;
 
 public class Path {
     static Map<String, List<String>> map = new HashMap<String, List<String>>();
     CitiesReader cr;
-    List<String> subPath = new ArrayList<String>();
-
     static {
         List<String> bangalore = new ArrayList<String>();
         List<String> singapore = new ArrayList<String>();
@@ -39,9 +34,9 @@ public class Path {
         map.put("Tokyo", tokyo);
     }
 
-    public Path() {
-        map = map;
-    }
+//    public Path() {
+//        map = map;
+//    }
 
     public Path(Map<String, List<String>> map, CitiesReader cr) {
         this.map = map;
@@ -62,43 +57,50 @@ public class Path {
         return false;
     }
 
-    public List<String> getPath(String station1, String station2) {
+    public List<List<String>> getPath(String station1, String station2) {
         List<String> fullPath = new ArrayList<String>();
-        fullPath.add(station1);
-        fullPath = (givePath(fullPath, station1, station2));
-        return fullPath;
+        List<List<String>> allPaths = new ArrayList<List<String>>();
+        givePath(fullPath, allPaths,station1, station2);
+        return allPaths;
     }
 
-    private List<String> givePath(List<String> fullPath, String station1, String station2) {
-        if (map.get(station1).contains(station2)) {
-            fullPath.add(station2);
-            return fullPath;
+    private void givePath(List<String> fullPath, List<List<String>> allPaths,String station1, String station2) {
+        fullPath.add(station1);
+        if (station1.equals(station2)) {
+            allPaths.add(new ArrayList<String>(fullPath));
+            fullPath.remove(station1);
+            return;
         }
         int size = map.get(station1).size();
-        for (int i = 0; i < size; i++) {
-            if (!fullPath.contains(map.get(station1).get(i))) {
-                fullPath.add(map.get(station1).get(i));
-                return givePath(fullPath, map.get(station1).get(i), station2);
+        List<String> destinations = map.get(station1);
+        for (int i = 0; i < destinations.size(); i++) {
+            if (!fullPath.contains(destinations.get(i))) {
+                givePath(fullPath, allPaths, destinations.get(i), station2);
             }
         }
-        return fullPath;
+        fullPath.remove(station1);
     }
 
     public String printPath(String source, String destination) throws Exception {
-        List<String> fullPath = getPath(source, destination);
-        int size = fullPath.size();
-        if((fullPath.get(0) == source) && (fullPath.get(size-1) == destination)){
-            String fullRoute = "";
-            for (int i = 0; i < size; i++) {
-                String pathWithCity = fullPath.toArray()[i].toString();
-                if (i > 0) {
-                    fullRoute += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
-                } else {
-                    fullRoute += "" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+        List<List<String>> allPaths = getPath(source, destination);
+        int size = allPaths.size();
+        String fullRoute = "";
+        for(int i = 0; i < size; i++){
+            List<String> fullPath = allPaths.get(i);
+            int sizeOfEachPath = fullPath.size();
+            if((fullPath.get(0).equals(source)) && (fullPath.get(sizeOfEachPath-1).equals(destination))) {
+                String route = "";
+                for (int j = 0; j < sizeOfEachPath; j++) {
+                    String pathWithCity = fullPath.get(j);
+                    if (j > 0) {
+                        route += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+                    } else {
+                        route += (i+1)+" " + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+                    }
                 }
+                fullRoute = fullRoute+"\n"+ route;
             }
-            return fullRoute;
         }
-        return "Path doesn't exist";
+        return fullRoute;
     }
 }
