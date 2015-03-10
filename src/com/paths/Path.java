@@ -58,27 +58,27 @@ public class Path {
     }
 
     public List<List<String>> getPath(String station1, String station2) {
-        List<String> fullPath = new ArrayList<String>();
+        List<String> path = new ArrayList<String>();
         List<List<String>> allPaths = new ArrayList<List<String>>();
-        givePath(fullPath, allPaths,station1, station2);
+        givePath(path, allPaths,station1, station2);
         return allPaths;
     }
 
-    private void givePath(List<String> fullPath, List<List<String>> allPaths,String station1, String station2) {
-        fullPath.add(station1);
-        if (station1.equals(station2)) {
-            allPaths.add(new ArrayList<String>(fullPath));
-            fullPath.remove(station1);
+    private void givePath(List<String> path, List<List<String>> allPaths,String source, String destination) {
+        path.add(source);
+        if (source.equals(destination)) {
+            allPaths.add(new ArrayList<String>(path));
+            path.remove(source);
             return;
         }
-        int size = map.get(station1).size();
-        List<String> destinations = map.get(station1);
+        int size = map.get(source).size();
+        List<String> destinations = map.get(source);
         for (int i = 0; i < destinations.size(); i++) {
-            if (!fullPath.contains(destinations.get(i))) {
-                givePath(fullPath, allPaths, destinations.get(i), station2);
+            if (!path.contains(destinations.get(i))) {
+                givePath(path, allPaths, destinations.get(i), destination);
             }
         }
-        fullPath.remove(station1);
+        path.remove(source);
     }
 
     public String printPath(String source, String destination) throws Exception {
@@ -86,16 +86,16 @@ public class Path {
         int size = allPaths.size();
         String fullRoute = "";
         for(int i = 0; i < size; i++){
-            List<String> fullPath = allPaths.get(i);
-            int sizeOfEachPath = fullPath.size();
-            if((fullPath.get(0).equals(source)) && (fullPath.get(sizeOfEachPath-1).equals(destination))) {
+            List<String> path = allPaths.get(i);
+            int sizeOfEachPath = path.size();
+            if((path.get(0).equals(source)) && (path.get(sizeOfEachPath-1).equals(destination))) {
                 String route = "";
                 for (int j = 0; j < sizeOfEachPath; j++) {
-                    String pathWithCity = fullPath.get(j);
+                    String pathWithCity = path.get(j);
                     if (j > 0) {
                         route += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
                     } else {
-                        route += (i+1)+" " + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+                        route += (i+1)+". " + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
                     }
                 }
                 fullRoute = fullRoute+"\n"+ route;
