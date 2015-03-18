@@ -104,25 +104,32 @@ public class Path {
         List<List<String>> allPaths = getPath(source, destination);
         int size = allPaths.size();
         String fullRoute = "";
-        if(hasPath(source,destination)==1) {
-            for (int i = 0; i < size; i++) {
-                List<String> path = allPaths.get(i);
-                int sizeOfEachPath = path.size();
-                if ((path.get(0).equals(source)) && (path.get(sizeOfEachPath - 1).equals(destination))) {
-                    String route = "";
-                    for (int j = 0; j < sizeOfEachPath; j++) {
-                        String pathWithCity = path.get(j);
-                        if (j > 0) {
-                            route += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
-                        } else {
-                            route += (i + 1) + ". " + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
-                        }
-                    }
-                    fullRoute = fullRoute + "\n" + route;
-                }
-            }
-            return fullRoute;
-        }
+        if(hasPath(source,destination) == 1)
+            return getFullRoute(source, destination, allPaths, size, fullRoute);
         return "Path doesn't exist";
+    }
+
+    private String getFullRoute(String source, String destination, List<List<String>> allPaths, int size, String fullRoute) {
+        for (int i = 0; i < size; i++) {
+            List<String> path = allPaths.get(i);
+            int sizeOfEachPath = path.size();
+            if ((path.get(0).equals(source)) && (path.get(sizeOfEachPath - 1).equals(destination))) {
+                String route = "";
+                route = getRouteString(i, path, sizeOfEachPath, route);
+                fullRoute = fullRoute + "\n" + route;
+            }
+        }
+        return fullRoute;
+    }
+
+    private String getRouteString(int i, List<String> path, int sizeOfEachPath, String route) {
+        for (int j = 0; j < sizeOfEachPath; j++) {
+            String pathWithCity = path.get(j);
+            if (j > 0)
+                route += "->" + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+            else
+                route += (i + 1) + ". " + pathWithCity + "[" + cr.getCountry(pathWithCity) + "]";
+        }
+        return route;
     }
 }
