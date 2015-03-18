@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Path {
-    static Map<String, List<String>> map = new HashMap<String, List<String>>();
+    static Map<String, List<String>> routesMap = new HashMap<String, List<String>>();
     CitiesReader cr;
     static {
         List<String> bangalore = new ArrayList<String>();
@@ -27,30 +27,30 @@ public class Path {
         seoul.add("Beijing");
         beijing.add("Tokyo");
         dubai.add("Seoul");
-        map.put("Bangalore", bangalore);
-        map.put("Singapore", singapore);
-        map.put("Seoul", seoul);
-        map.put("Beijing", beijing);
-        map.put("Dubai", dubai);
-        map.put("Tokyo", tokyo);
+        routesMap.put("Bangalore", bangalore);
+        routesMap.put("Singapore", singapore);
+        routesMap.put("Seoul", seoul);
+        routesMap.put("Beijing", beijing);
+        routesMap.put("Dubai", dubai);
+        routesMap.put("Tokyo", tokyo);
     }
 
     public Path() {
-        map = map;
+        routesMap = routesMap;
     }
 
-    public Path(Map<String, List<String>> map, CitiesReader cr) {
-        this.map = map;
+    public Path(Map<String, List<String>> routesMap, CitiesReader cr) {
+        this.routesMap = routesMap;
         this.cr = cr;
     }
 
     public boolean isCityPresent(String city) {
-        Set<String> sourceStations = map.keySet();
+        Set<String> sourceStations = routesMap.keySet();
         if (sourceStations.contains(city))
             return true;
         else {
             for (String source : sourceStations) {
-                List<String> destinations = map.get(source);
+                List<String> destinations = routesMap.get(source);
                 if (destinations.contains(city))
                     return true;
             }
@@ -58,14 +58,14 @@ public class Path {
         return false;
     }
     public boolean hasDirectPath(String source, String destination){
-        return (isCityPresent(source) && map.get(source).indexOf(destination)> -1);
+        return (isCityPresent(source) && routesMap.get(source).indexOf(destination)> -1);
     }
 
     public int hasIndirectPath(String source, String destination, List<String> path) {
         path.add(source);
         if(source.equals(destination)) return 0;
         if(hasDirectPath(source, destination)) return 1;
-        for (String city : map.get(source)) {
+        for (String city : routesMap.get(source)) {
             if(!path.contains(city) && hasIndirectPath(city, destination, path)==1)
                 return 1;
         }
@@ -91,7 +91,7 @@ public class Path {
             path.remove(source);
             return;
         }
-        List<String> destinations = map.get(source);
+        List<String> destinations = routesMap.get(source);
         for (String dest : destinations){
             if (!path.contains(dest)) {
                 givePath(path, allPaths, dest, destination);
@@ -102,14 +102,14 @@ public class Path {
 
     public String printPath(String source, String destination) throws Exception {
         List<List<String>> allPaths = getPath(source, destination);
-        int size = allPaths.size();
         String fullRoute = "";
         if(hasPath(source,destination) == 1)
-            return getFullRoute(source, destination, allPaths, size, fullRoute);
+            return getFullRoute(source, destination, allPaths, fullRoute);
         return "Path doesn't exist";
     }
 
-    private String getFullRoute(String source, String destination, List<List<String>> allPaths, int size, String fullRoute) {
+    private String getFullRoute(String source, String destination, List<List<String>> allPaths, String fullRoute) {
+        int size = allPaths.size();
         for (int i = 0; i < size; i++) {
             List<String> path = allPaths.get(i);
             int sizeOfEachPath = path.size();

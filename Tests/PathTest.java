@@ -13,8 +13,7 @@ import static org.junit.Assert.assertTrue;
 public class PathTest {
 
     @Test
-    public void isCityPresent_checks_whether_city_is_prsent() {
-        PathReader pr = new PathReader();
+    public void isCityPresent_checks_whether_city_is_present() {
         Path path = new Path();
         assertFalse(path.isCityPresent("Chennai"));
         assertTrue(path.isCityPresent("Dubai"));
