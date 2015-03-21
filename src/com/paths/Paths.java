@@ -27,8 +27,9 @@ class Paths {
         }
         PathReader pr = new PathReader();
         map = pr.readPath(fileName);
+        CostReader costR = new CostReader(fileName);
         CitiesReader cr = new CitiesReader(cityFile);
-        Path path = new Path(map,cr);
+        Path path = new Path(map,cr,costR);
 
         if(!path.isCityPresent(source)){
             System.out.println("No city named '"+source+"' in database");

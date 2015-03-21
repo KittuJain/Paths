@@ -10,6 +10,8 @@ import java.util.HashMap;
 public class Path {
     static Map<String, List<String>> routesMap = new HashMap<String, List<String>>();
     CitiesReader cr;
+    private CostReader costR;
+
     static {
         List<String> bangalore = new ArrayList<String>();
         List<String> singapore = new ArrayList<String>();
@@ -40,9 +42,10 @@ public class Path {
         routesMap = routesMap;
     }
 
-    public Path(Map<String, List<String>> routesMap, CitiesReader cr) {
+    public Path(Map<String, List<String>> routesMap, CitiesReader cr, CostReader costR) {
         this.routesMap = routesMap;
         this.cr = cr;
+        this.costR = costR;
     }
 
     public boolean isCityPresent(String city) {
@@ -118,7 +121,8 @@ public class Path {
                 String route = "";
                 route = getRouteString(i, path, sizeOfEachPath, route);
                 try {
-                    fullRoute = fullRoute + "\n" + route + new CostReader(new File("./Data/paths.txt")).getFullPathCost(path,source,destination);
+                    fullRoute += "\n" + route + "\nTotal Cost: " +
+                            costR.getFullPathCost(path,source,destination);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
