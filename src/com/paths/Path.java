@@ -1,5 +1,6 @@
 package com.paths;
 
+import java.io.File;
 import java.util.Map;
 import java.util.Set;
 import java.util.List;
@@ -116,7 +117,11 @@ public class Path {
             if ((path.get(0).equals(source)) && (path.get(sizeOfEachPath - 1).equals(destination))) {
                 String route = "";
                 route = getRouteString(i, path, sizeOfEachPath, route);
-                fullRoute = fullRoute + "\n" + route;
+                try {
+                    fullRoute = fullRoute + "\n" + route + new CostReader(new File("./Data/paths.txt")).getFullPathCost(path,source,destination);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         return fullRoute;

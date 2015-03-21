@@ -4,8 +4,13 @@ import java.util.*;
 import java.io.*;
 
 public class CostReader {
-    static Map<String,Map<String,Integer>> readCost(String fileName) throws Exception{
+    Map<String,Map<String,Integer>> routesMap = new HashMap<String,Map<String,Integer>>();
+    public CostReader(File file)throws Exception{
+        routesMap = readCost(file);
+    }
+    Map<String,Map<String,Integer>> readCost(File fileName) throws Exception{
         Map<String,Map<String,Integer>> routesMap = new HashMap<String,Map<String,Integer>>();
+
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             String line = "" + br.readLine();
@@ -34,19 +39,21 @@ public class CostReader {
         }
         return routesMap;
     }
-    public Integer getCost(Map<String,Map<String,Integer>> routesMap,String source,String destination){
+    private Integer getCost(String source,String destination){
         return routesMap.get(source).get(destination);
     }
-//    public Integer getFullPathCost(){
-//        Integer cost = 0;
-//        return cost;
-//    }
 
-    public static void main(String args[]) throws Exception {
-        Map<String,Map<String,Integer>> routesMap = new HashMap<String,Map<String,Integer>>();
-        CostReader cr = new CostReader();
-        routesMap = readCost("./Data/paths.txt");
-        System.out.println(cr.getCost(routesMap, "Bangalore", "Singapore"));
-//        System.out.println(cr.getFullPathCost());
+    public Integer getFullPathCost(List<String> path,String source,String destination){
+        int cost = 0;
+        if(routesMap.get(source).keySet().contains(destination)){
+            return getCost(source,destination);
+        }else {
+            path.remove(0);
+            for (String dest : path){
+                cost += getCost(source,dest);
+                source = dest;
+            }
+            return cost;
+        }
     }
 }
