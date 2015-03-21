@@ -8,28 +8,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Path {
-    static Map<String, List<String>> routesMap = new HashMap<String, List<String>>();
+    static Map<String, Map<String, Integer>> routesMap = new HashMap<String, Map<String, Integer>>();
     CitiesReader cr;
     private CostReader costR;
 
     static {
-        List<String> bangalore = new ArrayList<String>();
-        List<String> singapore = new ArrayList<String>();
-        List<String> seoul = new ArrayList<String>();
-        List<String> beijing = new ArrayList<String>();
-        List<String> dubai = new ArrayList<String>();
-        List<String> tokyo = new ArrayList<String>();
-        bangalore.add("Singapore");
-        singapore.add("Seoul");
-        seoul.add("Singapore");
-        dubai.add("Singapore");
-        beijing.add("Seoul");
-        tokyo.add("Beijing");
-        singapore.add("Bangalore");
-        singapore.add("Dubai");
-        seoul.add("Beijing");
-        beijing.add("Tokyo");
-        dubai.add("Seoul");
+        Map<String, Integer> bangalore = new HashMap<String, Integer>();
+        Map<String, Integer> singapore = new HashMap<String, Integer>();
+        Map<String, Integer> seoul = new HashMap<String, Integer>();
+        Map<String, Integer> beijing = new HashMap<String, Integer>();
+        Map<String, Integer> dubai = new HashMap<String, Integer>();
+        Map<String, Integer> tokyo = new HashMap<String, Integer>();
+        bangalore.put("Singapore",7000);
+        singapore.put("Seoul", 20000);
+        seoul.put("Singapore", 20000);
+        dubai.put("Singapore", 9000);
+        beijing.put("Seoul", 6000);
+        tokyo.put("Beijing", 4000);
+        singapore.put("Bangalore", 7000);
+        singapore.put("Dubai", 16000);
+        seoul.put("Beijing", 6000);
+        seoul.put("Dubai", 9000);
+        beijing.put("Tokyo", 4000);
+        dubai.put("Seoul", 9000);
         routesMap.put("Bangalore", bangalore);
         routesMap.put("Singapore", singapore);
         routesMap.put("Seoul", seoul);
@@ -42,7 +43,7 @@ public class Path {
         routesMap = routesMap;
     }
 
-    public Path(Map<String, List<String>> routesMap, CitiesReader cr, CostReader costR) {
+    public Path(Map<String, Map<String, Integer>> routesMap, CitiesReader cr, CostReader costR) {
         this.routesMap = routesMap;
         this.cr = cr;
         this.costR = costR;
@@ -50,26 +51,21 @@ public class Path {
 
     public boolean isCityPresent(String city) {
         Set<String> sourceStations = routesMap.keySet();
-        if (sourceStations.contains(city))
-            return true;
-        else {
-            for (String source : sourceStations) {
-                List<String> destinations = routesMap.get(source);
-                if (destinations.contains(city))
-                    return true;
-            }
-        }
-        return false;
+        return (sourceStations.contains(city)) ? true : false;
     }
     public boolean hasDirectPath(String source, String destination){
-        return (isCityPresent(source) && routesMap.get(source).indexOf(destination)> -1);
+        Map<String, Integer> destinationsWithCost = routesMap.get(source);
+        List<String> destinations = new ArrayList<String>(destinationsWithCost.keySet());
+        return (isCityPresent(source) && destinations.indexOf(destination)> -1);
     }
 
     public int hasIndirectPath(String source, String destination, List<String> path) {
         path.add(source);
         if(source.equals(destination)) return 0;
         if(hasDirectPath(source, destination)) return 1;
-        for (String city : routesMap.get(source)) {
+        Map<String, Integer> destinationsWithCost = routesMap.get(source);
+        List<String> destinations = new ArrayList<String>(destinationsWithCost.keySet());
+        for (String city : destinations) {
             if(!path.contains(city) && hasIndirectPath(city, destination, path)==1)
                 return 1;
         }
@@ -95,7 +91,8 @@ public class Path {
             path.remove(source);
             return;
         }
-        List<String> destinations = routesMap.get(source);
+        Map<String, Integer> destinationsWithCost = routesMap.get(source);
+        List<String> destinations = new ArrayList<String>(destinationsWithCost.keySet());
         for (String dest : destinations){
             if (!path.contains(dest)) {
                 givePath(path, allPaths, dest, destination);
@@ -122,7 +119,7 @@ public class Path {
                 route = getRouteString(i, path, sizeOfEachPath, route);
                 try {
                     fullRoute += "\n" + route + "\nTotal Cost: " +
-                            costR.getFullPathCost(path,source,destination);
+                            costR.getFullPathCost(path, source, destination);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

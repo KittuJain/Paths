@@ -3,12 +3,11 @@ package com.paths;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.List;
 import java.io.File;
 
 class Paths {
     public static void main(String[] args) throws Exception {
-        Map<String, List<String>> map = new HashMap<String, List<String>>();
+        Map<String, Map<String,Integer>> map = new HashMap<String, Map<String, Integer>>();
         int fileOptionIndex = Arrays.asList(args).indexOf("-f");
         int cityOptionIndex = Arrays.asList(args).indexOf("-c");
         int lastIndex = args.length-1;
@@ -25,11 +24,11 @@ class Paths {
             System.out.println("No database named "+cityFile+" found");
             return;
         }
-        PathReader pr = new PathReader();
-        map = pr.readPath(fileName);
+
         CostReader costR = new CostReader(fileName);
+        map = costR.readCost(fileName);
         CitiesReader cr = new CitiesReader(cityFile);
-        Path path = new Path(map,cr,costR);
+        Path path = new Path(map, cr, costR);
 
         if(!path.isCityPresent(source)){
             System.out.println("No city named '"+source+"' in database");
