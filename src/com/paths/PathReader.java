@@ -1,44 +1,59 @@
-//package com.paths;
-//
-//import java.io.BufferedReader;
-//import java.io.FileReader;
-//import java.io.File;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.HashMap;
-//import java.util.ArrayList;
-//
-//public class PathReader{
-//    public Map<String,List<String>> readPath(File fileName){
-//        Map<String,List<String>> routesMap = new HashMap<String,List<String>>();
-//        try{
-//            BufferedReader br = new BufferedReader(new FileReader(fileName));
-//            String line = ""+br.readLine();
-//            while(line != null){
-//                String path[] = line.split(",");
-//                List<String> destinations = routesMap.get(path[0]);
-//                if(destinations == null){
-//                    destinations = new ArrayList<String>();
-//                    destinations.add(path[1]);
-//                    routesMap.put(path[0],destinations);
-//                }
-//                else{
-//                    destinations.add(path[1]);
-//                }
-//                destinations = routesMap.get(path[1]);
-//                if(destinations == null){
-//                    destinations = new ArrayList<String>();
-//                    destinations.add(path[0]);
-//                    routesMap.put(path[1],destinations);
-//                }
-//                else{
-//                    destinations.add(path[0]);
-//                }
-//                line = br.readLine();
-//            }
-//        }catch(Exception e){
-//            System.out.println(e);
-//        }
-//        return routesMap;
-//    }
-//}
+package com.paths;
+
+import java.util.*;
+import java.io.*;
+
+public class PathReader {
+    Map<String,Map<String,Integer>> routesMap = new HashMap<String,Map<String,Integer>>();
+    public PathReader(File file)throws Exception{
+        routesMap = readCost(file);
+    }
+    Map<String,Map<String,Integer>> readCost(File fileName) throws Exception{
+        Map<String,Map<String,Integer>> routesMap = new HashMap<String,Map<String,Integer>>();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            String line = "" + br.readLine();
+            while (line != null) {
+                String path[] = line.split(",");
+                Map<String, Integer> destinations = routesMap.get(path[0]);
+                if (destinations == null) {
+                    destinations = new HashMap<String, Integer>();
+                    destinations.put(path[1], Integer.parseInt(path[2]));
+                    routesMap.put(path[0], destinations);
+                } else {
+                    destinations.put(path[1], Integer.parseInt(path[2]));
+                }
+                destinations = routesMap.get(path[1]);
+                if (destinations == null) {
+                    destinations = new HashMap<String, Integer>();
+                    destinations.put(path[0], Integer.parseInt(path[2]));
+                    routesMap.put(path[1], destinations);
+                } else {
+                    destinations.put(path[0], Integer.parseInt(path[2]));
+                }
+                line = br.readLine();
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return routesMap;
+    }
+    private Integer getCost(String source,String destination){
+        return routesMap.get(source).get(destination);
+    }
+
+    public Integer getFullPathCost(List<String> path,String source,String destination){
+        int cost = 0;
+        if(routesMap.get(source).keySet().contains(destination)){
+            return getCost(source,destination);
+        }else {
+            path.remove(0);
+            for (String dest : path){
+                cost += getCost(source,dest);
+                source = dest;
+            }
+            return cost;
+        }
+    }
+}

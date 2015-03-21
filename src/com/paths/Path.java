@@ -1,6 +1,5 @@
 package com.paths;
 
-import java.io.File;
 import java.util.Map;
 import java.util.Set;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.HashMap;
 public class Path {
     static Map<String, Map<String, Integer>> routesMap = new HashMap<String, Map<String, Integer>>();
     CitiesReader cr;
-    private CostReader costR;
+    private PathReader pr;
 
     static {
         Map<String, Integer> bangalore = new HashMap<String, Integer>();
@@ -43,10 +42,10 @@ public class Path {
         routesMap = routesMap;
     }
 
-    public Path(Map<String, Map<String, Integer>> routesMap, CitiesReader cr, CostReader costR) {
+    public Path(Map<String, Map<String, Integer>> routesMap, CitiesReader cr, PathReader pr) {
         this.routesMap = routesMap;
         this.cr = cr;
-        this.costR = costR;
+        this.pr = pr;
     }
 
     public boolean isCityPresent(String city) {
@@ -119,7 +118,7 @@ public class Path {
                 route = getRouteString(i, path, sizeOfEachPath, route);
                 try {
                     fullRoute += "\n" + route + "\nTotal Cost: " +
-                            costR.getFullPathCost(path, source, destination);
+                            pr.getFullPathCost(path, source, destination);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

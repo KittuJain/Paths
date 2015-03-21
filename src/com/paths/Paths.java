@@ -25,10 +25,10 @@ class Paths {
             return;
         }
 
-        CostReader costR = new CostReader(fileName);
-        map = costR.readCost(fileName);
+        PathReader pr = new PathReader(fileName);
+        map = pr.readCost(fileName);
         CitiesReader cr = new CitiesReader(cityFile);
-        Path path = new Path(map, cr, costR);
+        Path path = new Path(map, cr, pr);
 
         if(!path.isCityPresent(source)){
             System.out.println("No city named '"+source+"' in database");
