@@ -2,12 +2,11 @@ package com.paths;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.HashMap;
 import java.io.File;
 
 class Paths {
     public static void main(String[] args) throws Exception {
-        Map<String, Map<String,Integer>> map = new HashMap<String, Map<String, Integer>>();
+        Map<String, Map<String,Integer>> map;
         int fileOptionIndex = Arrays.asList(args).indexOf("-f");
         int cityOptionIndex = Arrays.asList(args).indexOf("-c");
         int lastIndex = args.length-1;
@@ -27,17 +26,17 @@ class Paths {
 
         PathReader pr = new PathReader(fileName);
         map = pr.readCost(fileName);
-        CitiesReader cr = new CitiesReader(cityFile);
-        Path path = new Path(map, cr, pr);
+        CitiesCountryManager cr = new CitiesCountryManager(cityFile);
+        PathManager pathManager = new PathManager(map, cr, pr);
 
-        if(!path.isCityPresent(source)){
+        if(!pathManager.isCityPresent(source)){
             System.out.println("No city named '"+source+"' in database");
             return;
         }
-        if(!path.isCityPresent(destination)){
+        if(!pathManager.isCityPresent(destination)){
             System.out.println("No city named '" + destination + "' in database");
             return;
         }
-        System.out.println(path.printPath(source,destination));
+        System.out.println(pathManager.printPath(source,destination));
     }
 }

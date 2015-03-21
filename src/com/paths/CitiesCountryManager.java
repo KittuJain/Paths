@@ -1,15 +1,11 @@
 package com.paths;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.File;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
-public class CitiesReader{
+public class CitiesCountryManager {
     Map<String,String> countryRoutes;
-    public CitiesReader(File file)throws Exception{
+    public CitiesCountryManager(File file)throws Exception{
         countryRoutes = readCity(file);
     }
     public Map<String,String> readCity(File fileName) throws Exception{
@@ -24,7 +20,7 @@ public class CitiesReader{
             }
         }
         catch(Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return countryRoutes;
     }

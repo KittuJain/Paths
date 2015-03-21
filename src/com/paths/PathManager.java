@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Path {
+public class PathManager {
     static Map<String, Map<String, Integer>> routesMap = new HashMap<String, Map<String, Integer>>();
-    CitiesReader cr;
+    CitiesCountryManager cr;
     private PathReader pr;
 
     static {
@@ -38,11 +38,9 @@ public class Path {
         routesMap.put("Tokyo", tokyo);
     }
 
-    public Path() {
-        routesMap = routesMap;
-    }
+    public PathManager() {}
 
-    public Path(Map<String, Map<String, Integer>> routesMap, CitiesReader cr, PathReader pr) {
+    public PathManager(Map<String, Map<String, Integer>> routesMap, CitiesCountryManager cr, PathReader pr) {
         this.routesMap = routesMap;
         this.cr = cr;
         this.pr = pr;

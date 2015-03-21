@@ -35,22 +35,23 @@ public class PathReader {
                 line = br.readLine();
             }
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return routesMap;
     }
-    private Integer getCost(String source,String destination){
+
+    public Integer getCost(String source, String destination) {
         return routesMap.get(source).get(destination);
     }
 
-    public Integer getFullPathCost(List<String> path,String source,String destination){
+    public Integer getFullPathCost(List<String> path, String source, String destination) {
         int cost = 0;
-        if(routesMap.get(source).keySet().contains(destination)){
-            return getCost(source,destination);
-        }else {
+        if (routesMap.get(source).keySet().contains(destination)) {
+            return getCost(source, destination);
+        } else {
             path.remove(0);
-            for (String dest : path){
-                cost += getCost(source,dest);
+            for (String dest : path) {
+                cost += getCost(source, dest);
                 source = dest;
             }
             return cost;
