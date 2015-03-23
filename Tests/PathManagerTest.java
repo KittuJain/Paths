@@ -1,7 +1,6 @@
 import com.paths.CitiesCountryManager;
 import com.paths.PathManager;
 import com.paths.PathReader;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import java.io.File;
@@ -56,8 +55,15 @@ public class PathManagerTest {
     @Test
     public void getPath_gets_possible_path_from_Singapore_to_Dubai() throws Exception {
         List<List<String>> allPaths = pathManager.getPath("Singapore", "Dubai");
-        assertEquals("Singapore", allPaths.get(0).get(0));
-        assertEquals("Dubai", allPaths.get(0).get(1));
+        List<String> list1 = new ArrayList<String>();
+        list1.add("Singapore");
+        list1.add("Seoul");
+        list1.add("Dubai");
+        List<String> list2 = new ArrayList<String>();
+        list2.add("Singapore");
+        list2.add("Dubai");
+        assertEquals(list1, allPaths.get(0));
+        assertEquals(list2, allPaths.get(1));
     }
 
     @Test

@@ -4,16 +4,18 @@ import java.util.Arrays;
 import java.io.File;
 
 class Paths {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception{
         int fileOptionIndex = Arrays.asList(args).indexOf("-f");
         int cityOptionIndex = Arrays.asList(args).indexOf("-c");
         int lastIndex = args.length-1;
-        File fileName = new File(args[fileOptionIndex+1]);
-        File cityFile = new File(args[cityOptionIndex+1]);
+        String fileName = args[fileOptionIndex+1];
+        String cityFileName = args[cityOptionIndex+1];
         String source = args[lastIndex-1];
         String destination = args[lastIndex];
+        File pathFile = new File(fileName);
+        File cityFile = new File(cityFileName);
 
-        if(!fileName.exists()){
+        if(!pathFile.exists()){
             System.out.println("No database named "+fileName+" found");
             return;
         }
@@ -22,9 +24,16 @@ class Paths {
             return;
         }
 
-        PathReader pr = new PathReader(fileName);
-        CitiesCountryManager cr = new CitiesCountryManager(cityFile);
-        PathManager pathManager = new PathManager(pr, cr);
+        PathReader pr;
+        CitiesCountryManager cr;
+        PathManager pathManager = null;
+        try {
+            pr = new PathReader(pathFile);
+            cr = new CitiesCountryManager(cityFile);
+            pathManager = new PathManager(pr, cr);
+        } catch (DatabaseNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
 
         if(!pathManager.isCityPresent(source)){
             System.out.println("No city named '"+source+"' in database");

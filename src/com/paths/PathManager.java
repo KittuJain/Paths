@@ -73,7 +73,7 @@ public class PathManager {
     public String printPath(String source, String destination) throws Exception {
         List<List<String>> allPaths = getPath(source, destination);
         String fullRoute = "";
-        if(hasPath(source,destination) == 1)
+        if (hasPath(source, destination) == 1)
             return getFullRoute(source, destination, allPaths, fullRoute);
         return "Path doesn't exist";
     }
