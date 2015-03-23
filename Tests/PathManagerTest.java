@@ -1,13 +1,12 @@
 import com.paths.CitiesCountryManager;
 import com.paths.PathManager;
 import com.paths.PathReader;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -36,36 +35,36 @@ public class PathManagerTest {
     @Test
     public void getPath_gets_possible_path_from_Bangalore_to_Singapore() throws Exception {
         List<List<String>> allPaths = pathManager.getPath("Bangalore", "Singapore");
-        assertTrue(allPaths.get(0).get(0).equals("Bangalore"));
-        assertTrue(allPaths.get(0).get(1).equals("Singapore"));
+        assertEquals("Bangalore", allPaths.get(0).get(0));
+        assertEquals("Singapore", allPaths.get(0).get(1));
     }
 
     @Test
     public void getPath_gets_possible_path_from_Seoul_to_Beijing() throws Exception {
         List<List<String>> allPaths = pathManager.getPath("Seoul", "Beijing");
-        assertTrue(allPaths.get(0).get(0).equals("Seoul"));
-        assertTrue(allPaths.get(0).get(1).equals("Beijing"));
+        assertEquals("Seoul", allPaths.get(0).get(0));
+        assertEquals("Beijing", allPaths.get(0).get(1));
     }
 
     @Test
     public void getPath_gets_possible_path_from_Beijing_to_Tokyo() throws Exception {
         List<List<String>> allPaths = pathManager.getPath("Beijing", "Tokyo");
-        assertTrue(allPaths.get(0).get(0).equals("Beijing"));
-        assertTrue(allPaths.get(0).get(1).equals("Tokyo"));
+        assertEquals("Beijing", allPaths.get(0).get(0));
+        assertEquals("Tokyo", allPaths.get(0).get(1));
     }
 
     @Test
     public void getPath_gets_possible_path_from_Singapore_to_Dubai() throws Exception {
         List<List<String>> allPaths = pathManager.getPath("Singapore", "Dubai");
-        assertTrue(allPaths.get(0).get(0).equals("Singapore"));
-//        assertTrue(allPaths.get(0).get(1).equals("Dubai"));
+        assertEquals("Singapore", allPaths.get(0).get(0));
+        assertEquals("Dubai", allPaths.get(0).get(1));
     }
 
     @Test
     public void getPath_gets_possible_path_from_Singapore_to_Seoul() throws Exception {
         List<List<String>> allPaths = pathManager.getPath("Singapore", "Seoul");
-        assertTrue(allPaths.get(0).get(0).equals("Singapore"));
-        assertTrue(allPaths.get(0).get(1).equals("Seoul"));
+        assertEquals("Singapore", allPaths.get(0).get(0));
+        assertEquals("Seoul", allPaths.get(0).get(1));
     }
 
     @Test
@@ -84,8 +83,8 @@ public class PathManagerTest {
         list2.add("Beijing");
         list2.add("Tokyo");
         List<List<String>> allPaths = pathManager.getPath("Bangalore", "Tokyo");
-        assertTrue(allPaths.get(0).equals(list1));
-        assertTrue(allPaths.get(1).equals(list2));
+        assertEquals(list1, allPaths.get(0));
+        assertEquals(list2, allPaths.get(1));
     }
 
     @Test

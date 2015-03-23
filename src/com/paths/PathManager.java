@@ -10,33 +10,6 @@ public class PathManager {
     private Map<String, Map<String, Integer>> routesMap = new HashMap<String, Map<String, Integer>>();
     private CitiesCountryManager cr;
     private PathReader pr;
-//
-//    static {
-//        Map<String, Integer> bangalore = new HashMap<String, Integer>();
-//        Map<String, Integer> singapore = new HashMap<String, Integer>();
-//        Map<String, Integer> seoul = new HashMap<String, Integer>();
-//        Map<String, Integer> beijing = new HashMap<String, Integer>();
-//        Map<String, Integer> dubai = new HashMap<String, Integer>();
-//        Map<String, Integer> tokyo = new HashMap<String, Integer>();
-//        bangalore.put("Singapore",7000);
-//        singapore.put("Seoul", 20000);
-//        seoul.put("Singapore", 20000);
-//        dubai.put("Singapore", 9000);
-//        beijing.put("Seoul", 6000);
-//        tokyo.put("Beijing", 4000);
-//        singapore.put("Bangalore", 7000);
-//        singapore.put("Dubai", 16000);
-//        seoul.put("Beijing", 6000);
-//        seoul.put("Dubai", 9000);
-//        beijing.put("Tokyo", 4000);
-//        dubai.put("Seoul", 9000);
-//        routesMap.put("Bangalore", bangalore);
-//        routesMap.put("Singapore", singapore);
-//        routesMap.put("Seoul", seoul);
-//        routesMap.put("Beijing", beijing);
-//        routesMap.put("Dubai", dubai);
-//        routesMap.put("Tokyo", tokyo);
-//    }
 
     public PathManager(PathReader pr, CitiesCountryManager cr) throws Exception {
         this.pr = pr;
@@ -48,6 +21,7 @@ public class PathManager {
         Set<String> sourceStations = routesMap.keySet();
         return (sourceStations.contains(city)) ? true : false;
     }
+
     public boolean hasDirectPath(String source, String destination){
         Map<String, Integer> destinationsWithCost = routesMap.get(source);
         List<String> destinations = new ArrayList<String>(destinationsWithCost.keySet());
