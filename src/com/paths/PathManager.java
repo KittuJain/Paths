@@ -7,43 +7,41 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PathManager {
-    static Map<String, Map<String, Integer>> routesMap = new HashMap<String, Map<String, Integer>>();
-    CitiesCountryManager cr;
+    private Map<String, Map<String, Integer>> routesMap = new HashMap<String, Map<String, Integer>>();
+    private CitiesCountryManager cr;
     private PathReader pr;
+//
+//    static {
+//        Map<String, Integer> bangalore = new HashMap<String, Integer>();
+//        Map<String, Integer> singapore = new HashMap<String, Integer>();
+//        Map<String, Integer> seoul = new HashMap<String, Integer>();
+//        Map<String, Integer> beijing = new HashMap<String, Integer>();
+//        Map<String, Integer> dubai = new HashMap<String, Integer>();
+//        Map<String, Integer> tokyo = new HashMap<String, Integer>();
+//        bangalore.put("Singapore",7000);
+//        singapore.put("Seoul", 20000);
+//        seoul.put("Singapore", 20000);
+//        dubai.put("Singapore", 9000);
+//        beijing.put("Seoul", 6000);
+//        tokyo.put("Beijing", 4000);
+//        singapore.put("Bangalore", 7000);
+//        singapore.put("Dubai", 16000);
+//        seoul.put("Beijing", 6000);
+//        seoul.put("Dubai", 9000);
+//        beijing.put("Tokyo", 4000);
+//        dubai.put("Seoul", 9000);
+//        routesMap.put("Bangalore", bangalore);
+//        routesMap.put("Singapore", singapore);
+//        routesMap.put("Seoul", seoul);
+//        routesMap.put("Beijing", beijing);
+//        routesMap.put("Dubai", dubai);
+//        routesMap.put("Tokyo", tokyo);
+//    }
 
-    static {
-        Map<String, Integer> bangalore = new HashMap<String, Integer>();
-        Map<String, Integer> singapore = new HashMap<String, Integer>();
-        Map<String, Integer> seoul = new HashMap<String, Integer>();
-        Map<String, Integer> beijing = new HashMap<String, Integer>();
-        Map<String, Integer> dubai = new HashMap<String, Integer>();
-        Map<String, Integer> tokyo = new HashMap<String, Integer>();
-        bangalore.put("Singapore",7000);
-        singapore.put("Seoul", 20000);
-        seoul.put("Singapore", 20000);
-        dubai.put("Singapore", 9000);
-        beijing.put("Seoul", 6000);
-        tokyo.put("Beijing", 4000);
-        singapore.put("Bangalore", 7000);
-        singapore.put("Dubai", 16000);
-        seoul.put("Beijing", 6000);
-        seoul.put("Dubai", 9000);
-        beijing.put("Tokyo", 4000);
-        dubai.put("Seoul", 9000);
-        routesMap.put("Bangalore", bangalore);
-        routesMap.put("Singapore", singapore);
-        routesMap.put("Seoul", seoul);
-        routesMap.put("Beijing", beijing);
-        routesMap.put("Dubai", dubai);
-        routesMap.put("Tokyo", tokyo);
-    }
-
-    public PathManager() {}
-
-    public PathManager(Map<String, Map<String, Integer>> routesMap, CitiesCountryManager cr, PathReader pr) {
-        this.routesMap = routesMap;
-        this.cr = cr;
+    public PathManager(PathReader pr, CitiesCountryManager cr) throws Exception {
         this.pr = pr;
+        this.cr = cr;
+        this.routesMap = pr.readCost();
     }
 
     public boolean isCityPresent(String city) {
@@ -115,8 +113,8 @@ public class PathManager {
                 String route = "";
                 route = getRouteString(i, path, sizeOfEachPath, route);
                 try {
-                    fullRoute += "\n" + route + "\nTotal Cost: " +
-                            pr.getFullPathCost(path, source, destination);
+                    int cost = pr.getFullPathCost(path, source, destination);
+                    fullRoute += "\n" + route + "\nTotal Cost: " + cost;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

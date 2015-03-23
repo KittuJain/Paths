@@ -1,12 +1,10 @@
 package com.paths;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.io.File;
 
 class Paths {
     public static void main(String[] args) throws Exception {
-        Map<String, Map<String,Integer>> map;
         int fileOptionIndex = Arrays.asList(args).indexOf("-f");
         int cityOptionIndex = Arrays.asList(args).indexOf("-c");
         int lastIndex = args.length-1;
@@ -25,9 +23,8 @@ class Paths {
         }
 
         PathReader pr = new PathReader(fileName);
-        map = pr.readCost(fileName);
         CitiesCountryManager cr = new CitiesCountryManager(cityFile);
-        PathManager pathManager = new PathManager(map, cr, pr);
+        PathManager pathManager = new PathManager(pr, cr);
 
         if(!pathManager.isCityPresent(source)){
             System.out.println("No city named '"+source+"' in database");

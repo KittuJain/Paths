@@ -4,15 +4,17 @@ import java.util.*;
 import java.io.*;
 
 public class PathReader {
+    private final File file;
     Map<String,Map<String,Integer>> routesMap = new HashMap<String,Map<String,Integer>>();
     public PathReader(File file)throws Exception{
-        routesMap = readCost(file);
+        this.file = file;
+        routesMap = readCost();
     }
-    Map<String,Map<String,Integer>> readCost(File fileName) throws Exception{
+    Map<String,Map<String,Integer>> readCost() throws Exception{
         Map<String,Map<String,Integer>> routesMap = new HashMap<String,Map<String,Integer>>();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            BufferedReader br = new BufferedReader(new FileReader(file));
             String line = "" + br.readLine();
             while (line != null) {
                 String path[] = line.split(",");
