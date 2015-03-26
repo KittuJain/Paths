@@ -1,7 +1,6 @@
 package com.paths;
 
 import java.util.Arrays;
-import java.io.File;
 import java.util.Map;
 
 class Paths {
@@ -13,18 +12,8 @@ class Paths {
         String cityFileName = args[cityOptionIndex+1];
         String source = args[lastIndex-1];
         String destination = args[lastIndex];
-        File cityFile = new File(cityFileName);
-
-        if(!new File(pathFileName).exists()){
-            System.out.println("No database named "+pathFileName+" found");
-            return;
-        }
-        if(!cityFile.exists()){
-            System.out.println("No database named "+cityFile+" found");
-            return;
-        }
         PathsLib pathsLib = new PathsLib(pathFileName);
-        CitiesCountryManager citiesCountryManager = new CitiesCountryManager(cityFile);
+        CitiesCountryManager citiesCountryManager = new CitiesCountryManager(cityFileName);
         Map<String, Map<String, Integer>> routes = pathsLib.readCost(new FileScanner(pathFileName).read());
         PathManager pathManager = new PathManager(pathsLib, citiesCountryManager, routes);
 

@@ -12,7 +12,7 @@ public class PathManagerTest {
     @Before
     public void setUp() throws Exception {
         pl = new PathsLib("./Data/paths.txt");
-        cr = new CitiesCountryManager(new File("./Data/cities.txt"));
+        cr = new CitiesCountryManager("./Data/cities.txt");
         pathManager = new PathManager(pl, cr, pl.readCost(new FileScanner("./Data/paths.txt").read()));
     }
 

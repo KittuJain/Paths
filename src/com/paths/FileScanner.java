@@ -16,7 +16,7 @@ public class FileScanner {
         try {
             return new String(readAllBytes(get(path)));
         } catch (IOException e) {
-            System.out.println("File not Found");
+            System.out.println("No database named "+path+" found");
         }
         return null;
     }

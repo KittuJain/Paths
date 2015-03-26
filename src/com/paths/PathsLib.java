@@ -10,6 +10,8 @@ public class PathsLib {
     }
 
     public Map<String, Map<String, Integer>> readCost(String routes){
+        if(routes == null)
+            System.exit(0);
         Map<String,Map<String,Integer>> routesMap = new HashMap<String,Map<String,Integer>>();
         for (String route : routes.split(System.lineSeparator())) {
             String path[] = splitByComma(route);
@@ -42,7 +44,7 @@ public class PathsLib {
         return updatedWords;
     }
 
-    public Integer getCost(String source, String destination) {
+    private Integer getCost(String source, String destination) {
         return routesMap.get(source).get(destination);
     }
 
