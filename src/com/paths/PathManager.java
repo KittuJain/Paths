@@ -1,10 +1,6 @@
 package com.paths;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class PathManager {
     private Map<String, Map<String, Integer>> routesMap = new HashMap<String, Map<String, Integer>>();
@@ -19,7 +15,7 @@ public class PathManager {
 
     public boolean isCityPresent(String city) {
         Set<String> sourceStations = routesMap.keySet();
-        return (sourceStations.contains(city)) ? true : false;
+        return (sourceStations.contains(city));
     }
 
     public boolean hasDirectPath(String source, String destination){

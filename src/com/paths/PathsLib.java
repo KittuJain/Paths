@@ -20,16 +20,16 @@ public class PathsLib {
         return routesMap;
     }
 
-    private void populateRoutesMap(String route, Map<String, Map<String, Integer>> routesMap, int pathsFirst, int pathsSecond) {
+    private void populateRoutesMap(String route, Map<String, Map<String, Integer>> routesMap, int sourceIndex, int destinationIndex) {
         String path[] = splitByComma(route);
-        Map<String, Integer> destinations = routesMap.get(path[pathsFirst]);
+        Map<String, Integer> destinations = routesMap.get(path[sourceIndex]);
         if (destinations == null) {
             destinations = new HashMap<String, Integer>();
-            destinations.put(path[pathsSecond], Integer.parseInt(path[2]));
-            routesMap.put(path[pathsFirst], destinations);
+            destinations.put(path[destinationIndex], Integer.parseInt(path[2]));
+            routesMap.put(path[sourceIndex], destinations);
         }
         else
-            destinations.put(path[pathsSecond], Integer.parseInt(path[2]));
+            destinations.put(path[destinationIndex], Integer.parseInt(path[2]));
 
     }
 
