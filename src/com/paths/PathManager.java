@@ -9,12 +9,12 @@ import java.util.HashMap;
 public class PathManager {
     private Map<String, Map<String, Integer>> routesMap = new HashMap<String, Map<String, Integer>>();
     private CitiesCountryManager cr;
-    private PathReader pr;
+    private PathsLib pathsLib;
 
-    public PathManager(PathReader pr, CitiesCountryManager cr) throws Exception {
-        this.pr = pr;
+    public PathManager(PathsLib pathsLib, CitiesCountryManager cr,Map<String, Map<String, Integer>> routesMap) throws Exception {
+        this.pathsLib = pathsLib;
         this.cr = cr;
-        this.routesMap = pr.readCost();
+        this.routesMap = routesMap;
     }
 
     public boolean isCityPresent(String city) {
@@ -87,7 +87,7 @@ public class PathManager {
                 String route = "";
                 route = getRouteString(i, path, sizeOfEachPath, route);
                 try {
-                    int cost = pr.getFullPathCost(path, source, destination);
+                    int cost = pathsLib.getFullPathCost(path, source, destination);
                     fullRoute += "\n" + route + "\nTotal Cost: " + cost;
                 } catch (Exception e) {
                     e.printStackTrace();

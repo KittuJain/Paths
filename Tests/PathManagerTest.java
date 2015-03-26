@@ -1,25 +1,19 @@
-import com.paths.CitiesCountryManager;
-import com.paths.PathManager;
-import com.paths.PathReader;
-import org.junit.Before;
-import org.junit.Test;
+import com.paths.*;
+import org.junit.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.*;
+import static junit.framework.Assert.*;
 
 public class PathManagerTest {
-    private PathReader pr;
+    private PathsLib pl;
     private CitiesCountryManager cr;
     private PathManager pathManager;
 
     @Before
     public void setUp() throws Exception {
-        pr = new PathReader(new File("./Data/paths.txt"));
+        pl = new PathsLib("./Data/paths.txt");
         cr = new CitiesCountryManager(new File("./Data/cities.txt"));
-        pathManager = new PathManager(pr,cr);
+        pathManager = new PathManager(pl, cr, pl.readCost(new FileScanner("./Data/paths.txt").read()));
     }
 
     @Test
