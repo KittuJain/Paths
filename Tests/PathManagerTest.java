@@ -1,8 +1,7 @@
 import com.paths.*;
 import org.junit.*;
-import java.io.File;
 import java.util.*;
-import static junit.framework.Assert.*;
+import static org.junit.Assert.*;
 
 public class PathManagerTest {
     private PathsLib pl;

@@ -14,25 +14,23 @@ public class PathsLib {
             System.exit(0);
         Map<String,Map<String,Integer>> routesMap = new HashMap<String,Map<String,Integer>>();
         for (String route : routes.split(System.lineSeparator())) {
-            String path[] = splitByComma(route);
-            Map<String, Integer> destinations = routesMap.get(path[0]);
-            if (destinations == null) {
-                destinations = new HashMap<String, Integer>();
-                destinations.put(path[1], Integer.parseInt(path[2]));
-                routesMap.put(path[0], destinations);
-            } else {
-                destinations.put(path[1], Integer.parseInt(path[2]));
-            }
-            destinations = routesMap.get(path[1]);
-            if (destinations == null) {
-                destinations = new HashMap<String, Integer>();
-                destinations.put(path[0], Integer.parseInt(path[2]));
-                routesMap.put(path[1], destinations);
-            } else {
-                destinations.put(path[0], Integer.parseInt(path[2]));
-            }
+            populateRoutesMap(route, routesMap, 0, 1);
+            populateRoutesMap(route, routesMap, 1, 0);
         }
         return routesMap;
+    }
+
+    private void populateRoutesMap(String route, Map<String, Map<String, Integer>> routesMap, int pathsFirst, int pathsSecond) {
+        String path[] = splitByComma(route);
+        Map<String, Integer> destinations = routesMap.get(path[pathsFirst]);
+        if (destinations == null) {
+            destinations = new HashMap<String, Integer>();
+            destinations.put(path[pathsSecond], Integer.parseInt(path[2]));
+            routesMap.put(path[pathsFirst], destinations);
+        }
+        else
+            destinations.put(path[pathsSecond], Integer.parseInt(path[2]));
+
     }
 
     private String[] splitByComma(String line) {
