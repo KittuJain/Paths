@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class PathManagerTest {
     private PathManager pathManager;
-
+    
     @Before
     public void setUp() throws Exception {
         PathsLib pl = new PathsLib("./Data/paths.txt");
