@@ -5,6 +5,8 @@ import java.util.Map;
 
 class Paths {
     public static void main(String[] args) throws Exception{
+        String CITY_NOT_FOUND = "No city named 'CITY' in database";
+        UserDisplay userDisplay = new UserDisplay();
         int lastIndex = args.length-1;
 
         String source = args[lastIndex-1];
@@ -22,14 +24,14 @@ class Paths {
         PathManager pathManager = new PathManager(pl, cm, routes);
 
         if(!pathManager.isCityPresent(source)){
-            System.out.println("No city named '"+source+"' in database");
+            userDisplay.show(CITY_NOT_FOUND.replace("CITY",source));
             return;
         }
 
         if(!pathManager.isCityPresent(destination)){
-            System.out.println("No city named '" + destination + "' in database");
+            userDisplay.show(CITY_NOT_FOUND.replace("CITY",destination));
             return;
         }
-        System.out.println(pathManager.printPath(source,destination));
+        userDisplay.show(pathManager.printPath(source, destination));
     }
 }
